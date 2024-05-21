@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Editor de BD de frutas</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">Agregar Fruta</span>
+        </nav>
+        <div class="container">
+            <h2>Datos de la fruta</h2>
+            <form id="myform">
+                <div class="form-group">
+                    <label for="name" >Nombre:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                    <label for="sci_name" >Nombre cientifico:</label>
+                    <input type="text" class="form-control" id="sci_name" name="sci_name" required>
+                    <label for="random_fact" >Dato trivial:</label>
+                    <input type="text" class="form-control" id="random_fact" name="random_fact" required>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            //script de frontend para procesar los datos y enviarlos al backend
+            document.getElementById('myform').addEventListener('submit', function(event){
+                event.preventDefault();
+                const formData = new FormData(this);
+                //console.log(formData);
+                const newbody= {  
+                    nombre:"aguacate",
+                    dato:"es verde "
+                }
+                const payload = {
+                    method:'POST',
+                    body:formData,
+                    headers: {
+                        "Content-Type":"application/x-www-form-urlencoded"
+                    }
+                }
+                console.log(payload);
+                fetch('/submit' , payload )
+                .then( response => response.json())
+                .then(data=>{
+                    //log en el navegador web
+                    console.log(data);
+                })
+                .catch(error=>{
+                    console.error('Error: ', error);
+                });
+            });
+        </script>
+    </body>
+</html>
